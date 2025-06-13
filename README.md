@@ -1,7 +1,6 @@
-#  MediPal – AI-Powered Health Savings Platform for Nigerians
+# MediPal – AI-Powered Health Savings Platform for Nigerians
 
 MediPal is an AI-driven health savings platform designed to help Nigerians prepare financially for common medical emergencies. Users receive personalized health risk predictions and saving recommendations, can create locked health wallets, access verified health providers, and optionally join community save circles. MediPal brings structure, insight, and accessibility to healthcare savings for underserved populations.
-
 
 ## Project Structure
 
@@ -15,11 +14,13 @@ MediPal/
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.8+
 - Node.js 16+
 - React Native (for mobile development)
 
 ### Backend Setup
+
 1. Navigate to the backend directory:
    ```bash
    cd backend
@@ -35,6 +36,7 @@ MediPal/
    ```
 
 ### Frontend Setup
+
 1. Navigate to the frontend directory:
    ```bash
    cd frontend
@@ -49,9 +51,11 @@ MediPal/
    ```
 
 ### Mobile Setup
-1. Navigate to the mobile directory:
+
+1. Navigate to the medipal directory in the mobile folder:
    ```bash
    cd mobile
+   cd medipal
    ```
 2. Install dependencies:
    ```bash
@@ -59,7 +63,7 @@ MediPal/
    ```
 3. Start the development server:
    ```bash
-   npm start
+   npx expo start
    ```
 
 ## Development Guidelines
@@ -77,4 +81,4 @@ MediPal/
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
