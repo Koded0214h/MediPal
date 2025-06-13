@@ -8,7 +8,7 @@ MediPal is an AI-driven health savings platform designed to help Nigerians prepa
 MediPal/
 ├── backend/         # Python backend API
 ├── frontend/        # Web frontend application
-└── mobile/         # Mobile application (to be created)
+└── mobile/         # Mobile application
 ```
 
 ## Getting Started
