@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout
 
 from decimal import Decimal
+from .utils.ai import generate_health_goals
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -12,11 +13,11 @@ from rest_framework.authentication import TokenAuthentication
 
 from .models import (
     CustomUser, HealthProfile, Wallet,
-    Transaction,Provider
+    Transaction, Provider, AIRecommendation
 )
 from .serializers import (
     UserSerializer, HealthProfileSerializer, TransactionSerializer,
-    ProviderService
+    ProviderService, AIRecommendationSerializer
 )
 
 
@@ -32,13 +33,16 @@ class RegisterView(APIView):
             if raw_password:
                 user.set_password(raw_password)
                 user.is_active = True  # Ensure user is active
+                
+                Wallet.objects.create(user=user, balance=0, is_locked=False)
+                
                 user.save()
 
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
-                'username': user.username,
-                'email': user.email
+                'email': user.email,
+                'fullName': user.fullName
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -47,17 +51,17 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
 
         try:
-            user = CustomUser.objects.get(username=username)
+            user = CustomUser.objects.get(email=email)
             if user.check_password(password):
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({
                     'token': token.key,
-                    'username': user.username,
-                    'email': user.email
+                    'email': user.email,
+                    'fullName': user.fullName
                 }, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
             pass
@@ -75,6 +79,32 @@ class LogoutView(APIView):
             pass
         logout(request)
         return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
+
+class DashboardView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        # User info
+        user_data = UserSerializer(user).data
+
+        # Health profile
+        try:
+            profile = HealthProfile.objects.get(user=user)
+            profile_data = HealthProfileSerializer(profile).data
+        except HealthProfile.DoesNotExist:
+            profile_data = {}
+
+        # Latest AI recommendation
+        latest_ai = AIRecommendation.objects.filter(user=user).order_by('-created_at').first()
+        ai_data = AIRecommendationSerializer(latest_ai).data if latest_ai else {}
+
+        return Response({
+            "user": user_data,
+            "profile": profile_data,
+            "latest_ai_recommendation": ai_data
+        })
 
 
 class HealthProfileView(APIView):
@@ -94,65 +124,106 @@ class HealthProfileView(APIView):
                 'existing_conditions': []
             }
 
-        response_data = {
+        return Response({
             **user_data,
-            'age': profile_data.get('age'),
-            'gender': profile_data.get('gender'),
-            'location': profile_data.get('location'),
-            'existing_conditions': profile_data.get('existing_conditions', [])
-        }
+            **profile_data
+        })
 
-        return Response(response_data)
+    def post(self, request):
+        # Get or create a profile
+        profile, _ = HealthProfile.objects.get_or_create(user=request.user)
 
-    def put(self, request):
-        try:
-            profile = HealthProfile.objects.get(user=request.user)
-        except HealthProfile.DoesNotExist:
-            # Create new profile with required fields
-            profile = HealthProfile.objects.create(
-                user=request.user,
-                age=request.data.get('age', 0),  # Default to 0 if not provided
-                gender=request.data.get('gender', 'male'),  # Default to male if not provided
-                location=request.data.get('location', '')  # Default to empty string if not provided
-            )
-
-        # Update user
+        # Update user info if provided
         user_data = {
-            'username': request.data.get('username'),
-            'email': request.data.get('email')
+            'email': request.data.get('email', request.user.email),
+            'fullName': request.data.get('fullName', request.user.fullName),
         }
+
         user_serializer = UserSerializer(request.user, data=user_data, partial=True)
         if user_serializer.is_valid():
             user_serializer.save()
         else:
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # Update profile
-        profile_data = {
-            'age': request.data.get('age'),
-            'gender': request.data.get('gender'),
-            'location': request.data.get('location'),
-            'existing_conditions': request.data.get('existing_conditions')
-        }
-        profile_serializer = HealthProfileSerializer(profile, data=profile_data, partial=True)
+        # Update/create the health profile
+        profile_serializer = HealthProfileSerializer(profile, data=request.data, partial=True)
         if profile_serializer.is_valid():
             profile_serializer.save()
         else:
             return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # Merge updated data
-        updated_user_data = UserSerializer(request.user).data
-        updated_profile_data = HealthProfileSerializer(profile).data
+        return Response({
+            **UserSerializer(request.user).data,
+            **HealthProfileSerializer(profile).data
+        })
 
-        response_data = {
-            **updated_user_data,
-            'age': updated_profile_data.get('age'),
-            'gender': updated_profile_data.get('gender'),
-            'location': updated_profile_data.get('location'),
-            'existing_conditions': updated_profile_data.get('existing_conditions', [])
-        }
+class HealthProfileAIView(APIView):
+    permission_classes = [IsAuthenticated]
 
-        return Response(response_data)
+    def post(self, request):
+        user = request.user
+        profile, _ = HealthProfile.objects.get_or_create(user=user)
+
+        # Update profile first
+        serializer = HealthProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            profile = serializer.save()
+
+            # Generate AI recommendations
+            ai_result = generate_health_goals(
+                age=profile.age,
+                gender=profile.gender,
+                location=profile.location,
+                existing_conditions=profile.existing_conditions,
+                full_name=f"{user.first_name} {user.last_name}"
+            )
+
+            ai_record = AIRecommendation.objects.create(
+                user=user,
+                input_data=ai_result["prompt"],
+                predicted_risk="Moderate",  # Or real logic later
+                suggested_goals=ai_result["output"]
+            )
+
+            return Response({
+                "profile": HealthProfileSerializer(profile).data,
+                "ai_recommendation": AIRecommendationSerializer(ai_record).data
+            }, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GenerateAIRecommendationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+
+        try:
+            profile = HealthProfile.objects.get(user=user)
+
+            ai_result = generate_health_goals(
+                age=profile.age,
+                gender=profile.gender,
+                location=profile.location,
+                existing_conditions=profile.existing_conditions,
+                full_name=f"{user.first_name} {user.last_name}"
+            )
+
+            recommendation = AIRecommendation.objects.create(
+                user=user,
+                input_data=ai_result["prompt"],
+                predicted_risk="N/A",
+                suggested_goals=ai_result["output"]
+            )
+
+            serializer = AIRecommendationSerializer(recommendation)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        except HealthProfile.DoesNotExist:
+            return Response({"error": "Health profile not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class WalletDeatilView(APIView):
     
@@ -267,3 +338,24 @@ class WalletPayProvidersView(APIView):
             })
         else:
             return Response({'error': 'Insufficient funds.'}, status=status.HTTP_400_BAD_REQUEST)
+
+class WalletSetGoalView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        wallet = get_object_or_404(Wallet, user=request.user)
+        try:
+            goal_amount = Decimal(request.data.get("goal_amount", 0))
+            if goal_amount <= 0:
+                return Response({"error": "Goal amount must be a positive number."}, status=400)
+
+            wallet.goal = goal_amount
+            wallet.save()
+
+            return Response({
+                "message": "Goal set successfully",
+                "goal": wallet.goal
+            }, status=200)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)

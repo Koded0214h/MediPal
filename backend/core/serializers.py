@@ -28,7 +28,7 @@ class ProviderServiceSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'phone', 'password']
+        fields = ['email', 'fullName', 'phoneNumber', 'country', 'countryCode', 'password']
         extra_kwargs = {
             'password': {'write_only': True},
             'is_active': {'default': True}
@@ -36,9 +36,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
-            username=validated_data['username'],
             email=validated_data['email'],
-            phone=validated_data['phone'],
+            fullName=validated_data['fullName'],
+            phoneNumber=validated_data['phoneNumber'],
+            country=validated_data['country'],
+            countryCode=validated_data['countryCode'],
             password=validated_data['password'],
             is_active=True
         )

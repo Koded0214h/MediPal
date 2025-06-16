@@ -1,0 +1,90 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "MediPal API",
+    "requests": [
+      {
+        "name": "Register",
+        "method": "POST",
+        "url": "http://localhost:8000/register/",
+        "body": {
+          "email": "user@mail.com",
+          "fullName": "Raufu Abdulrahman",
+          "password": "12345678",
+          "cuntryCode": "+234",
+          "country":"Nigeria"
+        }
+      },
+      {
+        "name": "Login",
+        "method": "POST",
+        "url": "http://localhost:8000/login/",
+        "body": {
+          "email": "user@mail.com",
+          "password": "12345678"
+        }
+      },
+      {
+        "name": "Health Profile (POST)",
+        "method": "POST",
+        "url": "http://localhost:8000/health-profile/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        },
+        "body": {
+          "age": 20,
+          "gender": "male",
+          "location": "Lagos",
+          "existing_conditions": ["asthma"]
+        }
+      },
+      {
+        "name": "Generate AI Recommendation",
+        "method": "POST",
+        "url": "http://localhost:8000/ai-recommendation/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        },
+        "body": {}
+      },
+      {
+        "name": "Set Wallet Goal",
+        "method": "POST",
+        "url": "http://localhost:8000/wallet/set-goal/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        },
+        "body": {
+          "goal_amount": 20000
+        }
+      },
+      {
+        "name": "Top Up Wallet",
+        "method": "POST",
+        "url": "http://localhost:8000/wallet/topup/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        },
+        "body": {
+          "amount": 30000
+        }
+      },
+      {
+        "name": "Lock Wallet",
+        "method": "POST",
+        "url": "http://localhost:8000/wallet/lock/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        },
+        "body": {}
+      },
+      {
+        "name": "Dashboard",
+        "method": "GET",
+        "url": "http://localhost:8000/dashboard/",
+        "headers": {
+          "Authorization": "Token {{auth_token}}"
+        }
+      }
+    ]
+  }
+  
