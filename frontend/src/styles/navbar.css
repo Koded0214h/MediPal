@@ -1,0 +1,122 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+ background-color: white;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin-bottom:15px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 4px 7px 7px #A5D6A7;
+
+;
+
+}
+nav ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    gap: 60px;
+    margin-top: 15px;
+}
+
+nav ul li a{
+    list-style-type: none;
+    text-decoration: none;
+    text-align: center;
+    color: #263238;
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: 'Helvetica';
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    color:  #263238;
+
+}.footer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: #A5D6A7;
+  padding: 40px 20px;
+  margin-top: 40px;
+  position: relative;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 10px 20px;
+}
+
+.footer-section h3 {
+  margin-bottom: 15px;
+  color: #263238;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #263238;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #1b5e20;
+}
+
+.logo img {
+  width: 130px;
+  height: 30px;
+  background-color: transparent;
+  margin-bottom: 20px;
+  position: relative;
+  top: 10px;
+  left: 5px;
+}
+
+.end {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 18px;
+  color: #FFFFFF;
+  font-weight: 400;
+  text-shadow: -1px -1px 0 #263238,
+               1px -1px 0 #263238,
+              -1px 1px 0 #263238,
+               1px 1px 0 #263238;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .logo img {
+    left: 0;
+  }
+}

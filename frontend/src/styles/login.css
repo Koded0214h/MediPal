@@ -1,0 +1,97 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.title {
+    text-align: center;
+    color: #263238;
+    margin-top: 150px;
+    margin-bottom: 70px;
+    font-size: 40px;
+
+}
+
+.input {
+    font-size: 20px;
+    color: #263238;
+    font-family: 'Roboto';
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.hero{
+    width: 80%;
+    height: 250px;
+    margin-left: 150px;
+    background-image: url("../img/bg1.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 2px 2px 7px #A5D6A7;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.login {
+    display: grid;
+    margin-left: 100px;
+}
+
+.value{
+    width: 70%;
+    margin-bottom: 20px;
+    height: 30px;
+    border: 1.5px solid #FFC107;
+    border-radius: 10px;
+
+}
+
+.fa {
+    position: relative;
+    top: -45px;
+    left: 420px;
+    color: #FFC107;
+}
+.fas {
+     position: relative;
+    top: -50px;
+    left: 420px;
+    color: #FFC107;
+}
+.submit {
+     width: 30%;
+    margin-bottom: 20px;
+    height: 40px;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    margin-left: 220px;
+    color: #263238;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter'
+
+}
+.terms {
+    margin-left: -65px;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+/* Hide password reveal button in Edge/Chrome */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container,
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-outer-spin-button {
+  display: none !important;
+}
+
+/* This removes Chrome's eye icon */
+input[type="password"]::-webkit-password-toggle {
+  display: none;
+}
+
+/* General fallback */
+input[type="password"] {
+  -webkit-text-security: disc !important;
+}
