@@ -50,10 +50,14 @@ class Condition(models.Model):
 
 
 class HealthProfile(models.Model):
-    GENDER_CHOICES = [('male', 'Male'), ('female', 'Female')]
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other')
+    ]
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    age = models.IntegerField()
+    age = models.IntegerField(null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     location = models.CharField(max_length=255)
     existing_conditions = models.ManyToManyField(Condition, blank=True)

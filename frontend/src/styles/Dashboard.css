@@ -1,3 +1,12 @@
+:root {
+    --primary: #4caf50;
+    --secondary: #a5d6a7;
+    --accent: #ffc107;
+    --background: #ffffff;
+    --text: #263238;
+    --light-gray: #f0f2f5;
+}
+
 .dashboard-container {
   margin: auto;
   padding: 20px;
@@ -43,4 +52,325 @@ h2 {
 .nudge {
   font-style: italic;
   color: #6c757d;
+}
+
+.dashboard-loader-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--light-gray);
+    color: var(--text);
+    font-size: 1.2em;
+}
+
+.spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid var(--primary);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dashboard-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffebee;
+    color: #d32f2f;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Existing dashboard styles (if any, will be retained or adjusted as needed) */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.logout-button {
+    background-color: var(--accent);
+    color: var(--text);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e6b000;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2rem 5%;
+}
+
+.dashboard-content section {
+    background-color: var(--background);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-content h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 0.5rem;
+}
+
+.health-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 1.2em;
+}
+
+.stat-card p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-header,
+    .dashboard-content {
+        padding: 1rem 3%;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5em;
+    }
+
+    .logout-button {
+        padding: 0.6rem 1.2rem;
+    }
+
+    .dashboard-content h2 {
+        font-size: 1.4em;
+    }
+
+    .health-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dashboard-main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.dashboard-overview-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-bottom-sections-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.card {
+    background-color: var(--background);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+}
+
+.card h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 0.5rem;
+}
+
+/* Health Summary Specific Styles */
+.health-summary .health-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.health-summary .stat-item {
+    background-color: var(--light-gray);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.health-summary .stat-item.full-width {
+    grid-column: 1 / -1; /* Spans all columns */
+}
+
+.health-summary .stat-item h3 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 1em;
+}
+
+.health-summary .stat-item p {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Wallet Summary Specific Styles */
+.wallet-summary .wallet-balance {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.wallet-summary .wallet-goal {
+    font-size: 1.1em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+}
+
+.wallet-summary .btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    margin-top: 10px; /* Adjust for button spacing */
+}
+
+.wallet-summary .primary-btn {
+    background-color: var(--primary);
+    color: white;
+}
+
+.wallet-summary .secondary-btn {
+    background-color: var(--accent);
+    color: var(--text);
+}
+
+.wallet-summary .primary-btn:hover {
+    background-color: #388e3c;
+}
+
+.wallet-summary .secondary-btn:hover {
+    opacity: 0.9;
+}
+
+/* AI Nudge Specific Styles */
+.ai-nudge p {
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.ai-nudge small {
+    display: block;
+    text-align: right;
+    color: #666;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .dashboard-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-bottom-sections-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-main-content {
+        padding: 1rem;
+    }
+
+    .dashboard-header {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5em;
+    }
+
+    .logout-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9em;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .card h2 {
+        font-size: 1.4em;
+    }
+
+    .health-summary .health-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-summary .wallet-balance {
+        font-size: 2em;
+    }
+
+    .wallet-summary .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9em;
+    }
 }

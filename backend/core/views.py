@@ -17,7 +17,7 @@ from .models import (
 )
 from .serializers import (
     UserSerializer, HealthProfileSerializer, TransactionSerializer,
-    ProviderService, AIRecommendationSerializer
+    ProviderService, AIRecommendationSerializer, WalletSerializer
 )
 
 
@@ -131,31 +131,37 @@ class HealthProfileView(APIView):
 
     def post(self, request):
         # Get or create a profile
-        profile, _ = HealthProfile.objects.get_or_create(user=request.user)
+        profile, created = HealthProfile.objects.get_or_create(user=request.user)
 
-        # Update user info if provided
-        user_data = {
-            'email': request.data.get('email', request.user.email),
-            'fullName': request.data.get('fullName', request.user.fullName),
-        }
+        # Prepare data for HealthProfileSerializer including existing_conditions_names
+        data = request.data.copy()
 
-        user_serializer = UserSerializer(request.user, data=user_data, partial=True)
-        if user_serializer.is_valid():
-            user_serializer.save()
-        else:
-            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Handle age field
+        if 'age' in data:
+            try:
+                # Convert to string first to handle any type of input
+                age_str = str(data['age']).strip()
+                if age_str:  # Only convert if not empty
+                    data['age'] = int(age_str)
+                else:
+                    data['age'] = None
+            except (ValueError, TypeError):
+                return Response(
+                    {"age": "Age must be a valid number."}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
-        # Update/create the health profile
-        profile_serializer = HealthProfileSerializer(profile, data=request.data, partial=True)
+        # Handle existing conditions
+        if 'existing_conditions' in data and isinstance(data['existing_conditions'], str):
+            data['existing_conditions_names'] = [c.strip() for c in data['existing_conditions'].split(',') if c.strip()]
+            del data['existing_conditions']
+
+        profile_serializer = HealthProfileSerializer(profile, data=data, partial=True)
         if profile_serializer.is_valid():
-            profile_serializer.save()
+            profile = profile_serializer.save()
+            return Response(HealthProfileSerializer(profile).data, status=status.HTTP_200_OK)
         else:
             return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({
-            **UserSerializer(request.user).data,
-            **HealthProfileSerializer(profile).data
-        })
 
 class HealthProfileAIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -175,7 +181,7 @@ class HealthProfileAIView(APIView):
                 gender=profile.gender,
                 location=profile.location,
                 existing_conditions=profile.existing_conditions,
-                full_name=f"{user.first_name} {user.last_name}"
+                full_name=user.fullName # Use user.fullName
             )
 
             ai_record = AIRecommendation.objects.create(
@@ -194,36 +200,78 @@ class HealthProfileAIView(APIView):
 
 class GenerateAIRecommendationView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def get(self, request):
+        user = request.user
+        try:
+            # Get the latest AI recommendation for the user
+            latest_recommendation = AIRecommendation.objects.filter(user=user).order_by('-created_at').first()
+            
+            if latest_recommendation:
+                serializer = AIRecommendationSerializer(latest_recommendation)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                # If no recommendation exists, try to generate one
+                try:
+                    profile = HealthProfile.objects.get(user=user)
+                    return self._generate_recommendation(user, profile)
+                except HealthProfile.DoesNotExist:
+                    return Response(
+                        {"error": "Please complete your health profile first."}, 
+                        status=status.HTTP_404_NOT_FOUND
+                    )
+
+        except Exception as e:
+            print(f"Error in AI recommendation GET: {str(e)}")
+            return Response(
+                {"error": str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def post(self, request):
         user = request.user
-
         try:
             profile = HealthProfile.objects.get(user=user)
+            return self._generate_recommendation(user, profile)
+        except HealthProfile.DoesNotExist:
+            return Response(
+                {"error": "Please complete your health profile first."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            print(f"Error in AI recommendation POST: {str(e)}")
+            return Response(
+                {"error": str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
+    def _generate_recommendation(self, user, profile):
+        """Helper method to generate AI recommendations"""
+        try:
             ai_result = generate_health_goals(
                 age=profile.age,
                 gender=profile.gender,
                 location=profile.location,
                 existing_conditions=profile.existing_conditions,
-                full_name=f"{user.first_name} {user.last_name}"
+                full_name=user.fullName
             )
 
             recommendation = AIRecommendation.objects.create(
                 user=user,
                 input_data=ai_result["prompt"],
-                predicted_risk="N/A",
+                predicted_risk="Moderate",  # You can make this dynamic based on the AI result
                 suggested_goals=ai_result["output"]
             )
 
             serializer = AIRecommendationSerializer(recommendation)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        except HealthProfile.DoesNotExist:
-            return Response({"error": "Health profile not found"}, status=status.HTTP_404_NOT_FOUND)
-
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(f"Error generating AI recommendation: {str(e)}")
+            return Response(
+                {"error": "Failed to generate AI recommendation. Please try again."}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class WalletDeatilView(APIView):
     
@@ -237,7 +285,7 @@ class WalletDeatilView(APIView):
             'goal':wallet.goal,
             'is_locked':wallet.is_locked,
         })
-    
+        
 
 class WalletTopUpView(APIView):
     permission_classes = [IsAuthenticated]
@@ -343,19 +391,27 @@ class WalletSetGoalView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        wallet = get_object_or_404(Wallet, user=request.user)
-        try:
-            goal_amount = Decimal(request.data.get("goal_amount", 0))
-            if goal_amount <= 0:
-                return Response({"error": "Goal amount must be a positive number."}, status=400)
+        user = request.user
+        wallet = get_object_or_404(Wallet, user=user)
+        serializer = WalletSerializer(wallet, data=request.data, partial=True)
 
-            wallet.goal = goal_amount
-            wallet.save()
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            return Response({
-                "message": "Goal set successfully",
-                "goal": wallet.goal
-            }, status=200)
 
-        except Exception as e:
-            return Response({"error": str(e)}, status=500)
+class ContactView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        return Response({"message": "Welcome to the Contact Page!"}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        # Here you would typically process contact form submissions (e.g., send an email)
+        # For now, let's just acknowledge receipt.
+        name = request.data.get('name', 'Guest')
+        email = request.data.get('email', 'N/A')
+        message = request.data.get('message', 'No message')
+        print(f"Contact form submission from {name} ({email}): {message}")
+        return Response({"message": "Your message has been received!"}, status=status.HTTP_200_OK)

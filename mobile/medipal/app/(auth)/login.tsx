@@ -11,32 +11,21 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
-import PhoneInput, { ICountry } from "react-native-international-phone-number";
-import { Ionicons } from "@expo/vector-icons";
 import styles from "@/constants/styles/login-styles";
 
 export default function Login() {
   const router = useRouter();
-  const [selectedCountry, setSelectedCountry] = useState<ICountry | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleInputValue = (phoneNumber: string) => {
-    setInputValue(phoneNumber);
-  };
-
-  const handleSelectedCountry = (country: ICountry) => {
-    setSelectedCountry(country);
-  };
-
   const handleLogin = () => {
-    if (!inputValue || !password) {
+    if (!email || !password) {
       Alert.alert("Error", "Please fill all the fields");
-    } else {
-      setInputValue("");
-      setPassword("");
+      return;
     }
+    // Temporarily disable backend connection
+    Alert.alert("Info", "Login functionality is currently disabled.");
   };
 
   return (
@@ -59,31 +48,14 @@ export default function Login() {
             <View>
               {/* Form */}
               <View style={{ marginBottom: 10 }}>
-                <PhoneInput
-                  value={inputValue}
-                  onChangePhoneNumber={handleInputValue}
-                  selectedCountry={selectedCountry}
-                  onChangeSelectedCountry={handleSelectedCountry}
-                  defaultCountry="NG"
-                  placeholder="Phone Number"
+                <TextInput
+                  placeholder="Email"
+                  style={[styles.input, { marginTop: 20 }]}
                   placeholderTextColor={"#263238"}
-                  phoneInputStyles={{
-                    container: {
-                      borderWidth: 0,
-                    },
-                    input: {
-                      backgroundColor: "#A5D6A7",
-                      paddingHorizontal: 15,
-                      paddingVertical: 15,
-                      fontSize: 16,
-                      fontWeight: 500,
-                      borderEndEndRadius: 10,
-                      borderTopEndRadius: 10,
-                    },
-                    flagContainer: {
-                      backgroundColor: "#A5D6A7",
-                    },
-                  }}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  value={email}
+                  onChangeText={setEmail}
                 />
                 <View style={{ position: "relative" }}>
                   <TextInput
@@ -102,14 +74,13 @@ export default function Login() {
                     }}
                     onPress={() => setShowPassword(!showPassword)}
                   >
-                    <Ionicons
-                      name={showPassword ? "eye-off" : "eye"}
-                      size={24}
-                      color="#263238"
-                    />
+                    <Text style={{ color: "#263238" }}>
+                      {showPassword ? "Hide" : "Show"}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
+
               <TouchableOpacity style={{ marginBottom: 30, maxWidth: "50%" }}>
                 <Text
                   style={{ textDecorationLine: "underline", color: "#263238" }}
