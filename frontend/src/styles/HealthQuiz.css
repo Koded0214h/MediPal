@@ -1,0 +1,64 @@
+.form-quiz {
+    background-image: url("../img/bg2.svg");
+    background-position: cover;
+    width: 100%;
+    background-size: cover;
+    opacity: -40px;
+}
+
+
+.health-quiz-form {
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
+  background: #f8f8f8;
+  border-radius: 10px;
+}
+
+.health-quiz-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.health-quiz-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.health-quiz-form input,
+.health-quiz-form select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.health-quiz-form button {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.8rem;
+  background: #0e7b5f;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.health-quiz-form button:hover {
+  background: #0056b3;
+}

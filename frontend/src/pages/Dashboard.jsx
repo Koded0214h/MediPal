@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
         <Navbar />
-      <h2>Welcome back, Vivian!</h2>
+      <h1>Welcome back, Vivian!</h1>
       <p>Your next health milestone is in sight 🚀</p>
 
       <div className="card">

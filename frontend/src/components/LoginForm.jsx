@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import axios from 'axios';
 import '../styles/login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
