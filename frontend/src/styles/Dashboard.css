@@ -14,16 +14,26 @@
   font-family: Arial, sans-serif;
 }
 
-h2 {
-  color: #0d6efd;
+h1 {
+  color: #263238;
+  margin: 40px 0;
+  text-align: center;
+}
+ .dashboard-container p {
+  margin: 20px;
+  font-weight: 600;
+  font-family: Inter;
+  font-size: 25px;
+ }
+.card {
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 7px 12px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
 }
 
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
+.card h3 {
+  font-size: 25px;
 }
 
 .wallet-balance {
@@ -39,8 +49,8 @@ h2 {
 
 .btn {
   display: inline-block;
-  background-color: #0d6efd;
-  color: white;
+  background-color: #ffc107;
+  color: black;
   padding: 10px 16px;
   border-radius: 6px;
   text-decoration: none;

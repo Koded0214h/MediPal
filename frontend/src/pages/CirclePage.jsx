@@ -25,7 +25,7 @@ const CirclePage = () => {
 
         <div className="circle-card">
           <h4>Malaria Cover Squad</h4>
-          <p>Saving ₦1,000 weekly</p>
+          <p>Saving: ₦1,000 weekly</p>
           <p>Members: 6</p>
           <button className="btn view">View</button>
         </div>

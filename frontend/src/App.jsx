@@ -11,6 +11,8 @@ import HealthProfilePage from './pages/HealthProfilePage';
 import RegisterPage from './pages/Register';
 import LoginPage from './pages/Login';
 import ContactPage from './pages/ContactPage';
+import Wallet from './pages/Wallet';
+import HealthQuiz from './pages/HealthQuiz';
 
 // Create a new component that uses useLocation
 function AppContent() {
@@ -46,6 +48,8 @@ function AppContent() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/circle" element={<CirclePage />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/quiz" element={<HealthQuiz />} />
                 <Route path="/health-profile-form" element={<HealthProfilePage />} />
             </Routes>
         </>
