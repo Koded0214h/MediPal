@@ -11,30 +11,20 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
-import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "@/constants/styles/login-styles";
 
 export default function Login() {
   const router = useRouter();
-  const [selectedCountry, setSelectedCountry] = useState<ICountry | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleInputValue = (phoneNumber: string) => {
-    setInputValue(phoneNumber);
-  };
-
-  const handleSelectedCountry = (country: ICountry) => {
-    setSelectedCountry(country);
-  };
-
   const handleLogin = () => {
-    if (!inputValue || !password) {
+    if (!email || !password) {
       Alert.alert("Error", "Please fill all the fields");
     } else {
-      setInputValue("");
+      setEmail("");
       setPassword("");
     }
   };
@@ -59,36 +49,20 @@ export default function Login() {
             <View>
               {/* Form */}
               <View style={{ marginBottom: 10 }}>
-                <PhoneInput
-                  value={inputValue}
-                  onChangePhoneNumber={handleInputValue}
-                  selectedCountry={selectedCountry}
-                  onChangeSelectedCountry={handleSelectedCountry}
-                  defaultCountry="NG"
-                  placeholder="Phone Number"
-                  placeholderTextColor={"#263238"}
-                  phoneInputStyles={{
-                    container: {
-                      borderWidth: 0,
-                    },
-                    input: {
-                      backgroundColor: "#A5D6A7",
-                      paddingHorizontal: 15,
-                      paddingVertical: 15,
-                      fontSize: 16,
-                      fontWeight: 500,
-                      borderEndEndRadius: 10,
-                      borderTopEndRadius: 10,
-                    },
-                    flagContainer: {
-                      backgroundColor: "#A5D6A7",
-                    },
-                  }}
-                />
+                <View style={{ position: "relative" }}>
+                  <TextInput
+                    placeholder="Email Address"
+                    style={styles.input}
+                    placeholderTextColor={"#263238"}
+                    value={email}
+                    onChangeText={setEmail}
+                    inputMode="email"
+                  />
+                </View>
                 <View style={{ position: "relative" }}>
                   <TextInput
                     placeholder="Password"
-                    style={[styles.input, { marginTop: 20 }]}
+                    style={styles.input}
                     placeholderTextColor={"#263238"}
                     secureTextEntry={!showPassword}
                     value={password}
@@ -98,7 +72,7 @@ export default function Login() {
                     style={{
                       position: "absolute",
                       right: 15,
-                      top: 35,
+                      top: 10,
                     }}
                     onPress={() => setShowPassword(!showPassword)}
                   >
