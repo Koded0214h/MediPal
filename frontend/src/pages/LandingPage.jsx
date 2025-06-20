@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/LandingPage.css';
+import health1 from '../assets/Medical prescription-bro.png';
 
 const LandingPage = () => {
     return (
@@ -26,7 +27,7 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className="hero-image">
-                    <img src="/img/Medical prescription-bro.png" alt="Health Illustration" />
+                    <img src={health1} alt="Health Illustration" />
                 </div>
             </main>
 

@@ -1,61 +1,76 @@
 import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
-    screenContainer: {
-      flex: 1,
-      paddingVertical: 50,
-      paddingHorizontal: 10,
-    },
-  
-    headerContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 50,
-    },
-  
-    headerText: {
-      fontSize: 20,
-      fontWeight: 700,
-    },
-  
-    input: {
-      borderRadius: 10,
-      paddingHorizontal: 15,
-      paddingVertical: 15,
-      marginBottom: 15,
-      fontSize: 16,
-      backgroundColor: "#A5D6A7",
-      fontWeight: "500",
-      color: "#263238",
-    },
-  
-    roleButton: {
-      borderWidth: 1.5,
-      borderRadius: 10,
-      paddingHorizontal: 10,
-      paddingVertical: 10,
-    },
-  
-    roleText: {
-      fontSize: 15,
-      fontWeight: 500,
-      color: "#263238",
-    },
-  
-    loginButtonContainer: {
-      backgroundColor: "#4CAF50",
-      width: "100%",
-      paddingVertical: 15,
-      borderRadius: 20,
-    },
-  
-    loginButton: {
-      textAlign: "center",
-      color: "#fff",
-      fontWeight: 600,
-      fontSize: 18,
-    },
-  });
-
-  export default styles
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#263238',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 32,
+  },
+  form: {
+    width: '100%',
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    fontSize: 16,
+  },
+  passwordContainer: {
+    position: 'relative',
+    marginBottom: 24,
+  },
+  passwordInput: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingRight: 50,
+    fontSize: 16,
+  },
+  showPasswordButton: {
+    position: 'absolute',
+    right: 16,
+    top: 12,
+    padding: 4,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  registerLink: {
+    alignItems: 'center',
+    padding: 8,
+  },
+  registerText: {
+    color: '#007AFF',
+    fontSize: 14,
+  },
+});

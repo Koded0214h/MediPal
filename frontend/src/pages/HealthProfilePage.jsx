@@ -23,7 +23,7 @@ const HealthProfilePage = () => {
                 if (response.data) {
                     setFormData({
                         age: response.data.age || '',
-                        gender: response.data.gender || '',
+                        gender: response.data.gender || '', // Backend will return proper capitalization
                         location: response.data.location || '',
                         // Convert array of condition objects to comma-separated string for input
                         existing_conditions: response.data.existing_conditions ? response.data.existing_conditions.map(cond => cond.name).join(', ') : '',
@@ -38,9 +38,12 @@ const HealthProfilePage = () => {
     }, []);
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Ensure gender is properly capitalized
+        const newValue = name === 'gender' ? value : value;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: newValue,
         });
     };
 
@@ -56,12 +59,20 @@ const HealthProfilePage = () => {
                 .map(cond => cond.trim())
                 .filter(cond => cond !== '');
 
+            // Validate gender is one of the allowed values
+            if (!['Male', 'Female', 'Other'].includes(formData.gender)) {
+                setError('Please select a valid gender option');
+                return;
+            }
+
             const payload = {
                 age: parseInt(formData.age, 10),
                 gender: formData.gender,
                 location: formData.location,
                 existing_conditions_names: conditionsArray, // Send as a list of names
             };
+
+            console.log('Sending payload to backend:', payload);
 
             const response = await api.post('/health-profile/', payload);
 
