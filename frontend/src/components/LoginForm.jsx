@@ -1,6 +1,7 @@
 import axios from 'axios';
 import '../styles/login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState } from 'react';
 
 
 export default function LoginForm() {
@@ -41,7 +42,7 @@ export default function LoginForm() {
           required
         />
 
-                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <i className="fa fa-user" aria-hidden="true"></i>
 
       </div>
 
@@ -72,7 +73,8 @@ export default function LoginForm() {
         type="submit"
         className="submit"
       >
-        Log In
+        <a href="/dashboard">
+        Log In</a>
       </button>
       <div className="terms">
         <p>Forgot Password?</p>

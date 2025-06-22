@@ -50,7 +50,7 @@ const Register = () => {
             <label>Existing Conditions</label>
             <textarea name="conditions" placeholder="e.g. asthma, diabetes..." />
 
-            <button type="submit">Register</button>
+            <button type="submit"><a href="/quiz">Register</a></button>
           </form>
         </div>
       </div>

@@ -46,11 +46,22 @@
 .create {
   background-color: #198754;
   color: white;
+ 
+}
+.tap {
+   position: relative;
+  right: 350px;
 }
 
+.tip {
+   position: relative;
+  left: 135px;
+}
 .join {
   background-color: #0d6efd;
   color: white;
+  position: relative;
+  right: 450px;
 }
 
 .cancel {
@@ -117,4 +128,12 @@
   padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+.pep {
+  position: relative;
+ right: 370px;
+}
+.pop {
+  position: relative;
+ right: -120px;
 }

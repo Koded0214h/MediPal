@@ -8,6 +8,11 @@ import Dashboard from './pages/Dashboard';
 import CirclePage from './pages/CirclePage';
 import Wallet from './pages/Wallet';
 import HealthQuiz from './pages/HealthQuiz'
+import ProfilePage from'./pages/ProfilePage'
+import CircleDetails from './pages/CircleDetails'
+import ProvidersPage from './pages/ProvidersPage'
+import SettingsPage from './pages/SettingsPage'
+
 
 function App() {
   return (
@@ -18,7 +23,11 @@ function App() {
         <Route path="/circle" element={<CirclePage />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/quiz" element={<HealthQuiz />} />
- /
+        <Route path="/profile" element ={<ProfilePage />} />
+        <Route path="/circledet" element = {<CircleDetails />}/>
+        <Route path="/provider" element ={<ProvidersPage />}/>
+        <Route path="/settings" element ={<SettingsPage />}/>
+
       </Routes>
     </Router>
   );

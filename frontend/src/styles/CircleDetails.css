@@ -1,0 +1,68 @@
+.circle-detail-container {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  font-family: "Poppins", sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #0e7b5f;
+  margin-bottom: 2rem;
+}
+
+.circle-meta p {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+.circle-meta p strong {
+  color: #263238;
+  margin-right: 15px;
+}
+.paid {
+  color: green;
+  font-weight: bold;
+}
+
+.unpaid {
+  color: crimson;
+  font-weight: bold;
+}
+
+.contribute-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  background-color: #0e7b5f;
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.contribute-btn:hover {
+  background-color: #0b5c47;
+}
+
+.member-section {
+  margin-top: 2rem;
+}
+
+.member-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.member-section li {
+  padding: 0.8rem;
+  background-color: #f8f8f8;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+}

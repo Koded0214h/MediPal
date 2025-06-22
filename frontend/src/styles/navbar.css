@@ -9,12 +9,13 @@ nav {
     justify-content: space-between;
     list-style: none;
     margin-bottom:15px;
-    height: 50px;
+    height: 45px;
     border-radius: 10px;
     box-shadow: 2px 2px 1px grey;
     position: sticky;
     top: 0;
     width: 100%;
+    scroll-behavior: none;
 
 ;
 

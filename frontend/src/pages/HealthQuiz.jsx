@@ -108,7 +108,7 @@ const HealthQuizForm = () => {
         <option>No</option>
       </select>
 
-      <button type="submit">Submit Quiz</button>
+      <button type="submit"><a href="/dashboard">Submit Quiz</a></button>
     </form>
     <Footer />
     </div>

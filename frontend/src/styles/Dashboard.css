@@ -48,9 +48,55 @@ h1 {
   margin-top: 10px;
   border: none;
   cursor: pointer;
+  width: 300px;
+  margin-left: 500px;
 }
 
 .nudge {
   font-style: italic;
   color: #6c757d;
 }
+
+.circle-actions {
+  margin-top: 2rem;
+  background: #f9f9f9;
+  padding: 2.5rem;
+  border-radius: 12px;
+  padding-right: 3rem;
+}
+
+.circle-actions h3 {
+  margin-top: 30px;
+  font-size: 25px;
+  color: #263238;
+  font-weight: 800;
+  font-family: 'Roboto'
+}
+.circle-btn-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-left: 500px;
+}
+
+.primary-btn, .secondary-btn {
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background-color: #0e7b5f;
+  color: white;
+}
+
+.secondary-btn {
+  background-color: #f2f2f2;
+  color: #0e7b5f;
+}
+
+.circle-actions p{
+  font-size: 20px;
+font-family: 'Lato';}

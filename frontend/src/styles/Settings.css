@@ -1,0 +1,77 @@
+.settings-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Poppins', sans-serif;
+}
+
+.settings-container h2 {
+  text-align: center;
+  color: #0e7b5f;
+  margin-bottom: 2rem;
+}
+
+.settings-container h3 {
+  margin-top: 2rem;
+  color: #222;
+}
+
+.settings-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.settings-container input[type="password"],
+.toggle-row input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #f2f2f2;
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.9rem;
+  background: #0e7b5f;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background: #0b5c47;
+}
+
+.danger {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 2px solid #ffe0e0;
+}
+
+.danger-btn {
+  background-color: crimson;
+  color: white;
+}
+
+.danger-btn:hover {
+  background-color: #a30000;
+}

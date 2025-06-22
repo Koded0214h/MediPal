@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/Dashboard.css";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
@@ -13,7 +14,7 @@ const Dashboard = () => {
       <div className="card">
         <h3>💰 Wallet</h3>
         <p className="wallet-balance">₦2,000</p>
-        <button className="btn">Top up</button>
+        <button className="btn"><a href="wallet">Top up</a></button>
       </div>
 
       <div className="card">
@@ -28,6 +29,21 @@ const Dashboard = () => {
           “Malaria risk is high this month in Lagos. Try to top up ₦1,000 to stay covered.”
         </p>
       </div>
+      <div className="circle-actions">
+  <h3>Your Circles</h3>
+  <p>You’re part of 2 active health circles.</p>
+  
+
+</div>
+  <div className="circle-btn-group">
+    <Link to="/circle">
+      <button className="primary-btn">➕ Create Circle</button>
+    </Link>
+
+    <Link to="/circle">
+      <button className="secondary-btn">🔗 Join Circle</button>
+    </Link>
+  </div>
       <Footer />
     </div>
   );
