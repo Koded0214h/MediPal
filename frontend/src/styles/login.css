@@ -1,97 +1,206 @@
-* {
-    padding: 0;
-    margin: 0;
+:root {
+    --primary: #4caf50;
+    --secondary: #a5d6a7;
+    --accent: #ffc107;
+    --background: #ffffff;
+    --text: #263238;
+    --light-gray: #f0f2f5;
 }
 
-.title {
+.login-page-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--light-gray);
+}
+
+.login-image-section {
+    flex: 1;
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
     text-align: center;
-    color: #263238;
-    margin-top: 150px;
-    margin-bottom: 70px;
-    font-size: 40px;
-
-}
-
-.input {
-    font-size: 20px;
-    color: #263238;
-    font-family: 'Roboto';
-    font-weight: 900;
-    margin-bottom: 10px;
-}
-
-.hero{
-    width: 80%;
-    height: 250px;
-    margin-left: 150px;
-    background-image: url("../img/bg1.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    box-shadow: 2px 2px 7px #A5D6A7;
-    margin-bottom: 40px;
-    margin-top: 40px;
-}
-
-.login {
-    display: grid;
-    margin-left: 100px;
-}
-
-.value{
-    width: 70%;
-    margin-bottom: 20px;
-    height: 30px;
-    border: 1.5px solid #FFC107;
-    border-radius: 10px;
-
-}
-
-.fa {
+    color: var(--text);
     position: relative;
-    top: -45px;
-    left: 420px;
-    color: #FFC107;
+    overflow: hidden;
 }
-.fas {
-     position: relative;
-    top: -50px;
-    left: 420px;
-    color: #FFC107;
-}
-.submit {
-     width: 30%;
+
+.login-image-section img {
+    max-width: 80%;
+    height: auto;
     margin-bottom: 20px;
-    height: 40px;
-    background-color: #4CAF50;
-    border-radius: 10px;
-    margin-left: 220px;
-    color: #263238;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Inter'
-
+    z-index: 1;
 }
-.terms {
-    margin-left: -65px;
+
+.image-text-content {
+    z-index: 1;
+}
+
+.image-text-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.image-text-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.login-form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.login-form {
+    background-color: var(--background);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-form h2 {
+    color: var(--text);
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+.form-group {
+    text-align: left;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--text);
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.form-group .fas {
+    position: absolute;
+    right: 15px;
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 1.1em;
+}
+
+.login-button {
+    padding: 15px;
+    background-color: var(--primary);
+    color: white;
+    font-size: 1.1em;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.login-button:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: var(--text);
+}
+
+.register-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #388e3c;
     text-decoration: underline;
-    margin-top: 10px;
-}
-/* Hide password reveal button in Edge/Chrome */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear,
-input[type="password"]::-webkit-credentials-auto-fill-button,
-input[type="password"]::-webkit-textfield-decoration-container,
-input[type="password"]::-webkit-inner-spin-button,
-input[type="password"]::-webkit-outer-spin-button {
-  display: none !important;
 }
 
-/* This removes Chrome's eye icon */
-input[type="password"]::-webkit-password-toggle {
-  display: none;
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .login-page-layout {
+        flex-direction: column;
+    }
 
-/* General fallback */
-input[type="password"] {
-  -webkit-text-security: disc !important;
+    .login-image-section {
+        padding: 30px;
+    }
+
+    .login-image-section img {
+        max-width: 60%;
+    }
+
+    .image-text-content h2 {
+        font-size: 2em;
+    }
+
+    .image-text-content p {
+        font-size: 1em;
+    }
+
+    .login-form-section {
+        padding: 30px;
+    }
+
+    .login-form {
+        padding: 30px;
+    }
+
+    .form-group input {
+        padding: 10px 12px;
+    }
+
+    .login-button {
+        padding: 12px;
+        font-size: 1em;
+    }
 }

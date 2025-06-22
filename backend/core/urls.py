@@ -15,5 +15,6 @@ urlpatterns = [
     path('wallet/lock/', views.WalletLockView.as_view(), name='wallet_lock'),
     path('wallet/pay/', views.WalletPayProvidersView.as_view(), name='wallet_pay'),
     path('wallet/set-goal/', views.WalletSetGoalView.as_view(), name='set_wallet_goal'),
+    path('contact/', views.ContactView.as_view(), name='contact'),
 ]
 
