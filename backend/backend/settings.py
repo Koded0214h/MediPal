@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-4ow0b@xnqud39&hdf7wv-a^nfpl6(uqx+y(^f%&3()0hc5b(_l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://medipal-kx8d.onrender.com']   # For development only. In production, specify your domain.
+ALLOWED_HOSTS = ['medipal-kx8d.onrender.com', 'localhost', '127.0.0.1']   # For development only. In production, specify your domain.
 
 
 # Application definition
