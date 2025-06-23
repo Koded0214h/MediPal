@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEnvelopeOpenText, FaUser, FaEnvelope, FaCommentDots } from 'react-icons/fa';
+import api from '../utils/axios';
 import '../styles/ContactPage.css';
 
 const ContactPage = () => {
@@ -9,6 +10,7 @@ const ContactPage = () => {
         message: '',
     });
     const [status, setStatus] = useState(''); // 'success', 'error', ''
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -20,15 +22,26 @@ const ContactPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('');
-        // Simulate API call
-        setTimeout(() => {
-            if (formData.name && formData.email && formData.message) {
+        setLoading(true);
+        
+        try {
+            console.log('Sending contact form:', formData);
+            const response = await api.post('/contact/', formData);
+            
+            console.log('Contact form response:', response.data);
+            
+            if (response.status === 200) {
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
             } else {
                 setStatus('error');
             }
-        }, 1200);
+        } catch (err) {
+            console.error('Contact form error:', err);
+            setStatus('error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -78,7 +91,9 @@ const ContactPage = () => {
                                 required
                             ></textarea>
                         </div>
-                        <button type="submit" className="contact-btn">Send Message</button>
+                        <button type="submit" className="contact-btn" disabled={loading}>
+                            {loading ? 'Sending...' : 'Send Message'}
+                        </button>
                     </form>
                 </div>
             </div>
