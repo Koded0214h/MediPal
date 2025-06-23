@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaUserPlus } from 'react-icons/fa';
+import api from '../utils/axios';
 import '../styles/Register.css';
 import RegisterForm from '../components/RegisterForm';
 
@@ -17,6 +19,7 @@ const countries = [
 ];
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -48,15 +51,36 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match');
             return;
         }
-        // Simulate registration logic
-        setTimeout(() => {
-            setError('');
-            // Redirect or update auth state here
-        }, 1200);
+
+        try {
+            console.log('Attempting registration with:', formData);
+            const response = await api.post('/register/', {
+                fullName: formData.fullName,
+                email: formData.email,
+                phoneNumber: formData.phoneNumber,
+                countryCode: formData.countryCode,
+                country: formData.country,
+                password: formData.password,
+            });
+
+            console.log('Registration response:', response.data);
+
+            if (response.status === 201 && response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                console.log('Registration successful, redirecting to health profile');
+                navigate('/health-profile-form');
+            } else {
+                setError(response.data.message || 'Registration failed.');
+            }
+        } catch (err) {
+            console.error('Registration error:', err);
+            setError(err.response?.data?.message || 'Registration failed. Please try again.');
+        }
     };
 
     return (

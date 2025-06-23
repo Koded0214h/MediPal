@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaLock, FaSignInAlt } from 'react-icons/fa';
+import api from '../utils/axios';
 import '../styles/login.css';
 
 const Login = () => {
@@ -7,22 +9,35 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
-        // Simulate login logic
-        setTimeout(() => {
-            setLoading(false);
-            if (!email || !password) {
-                setError('Please enter both email and password.');
+        
+        try {
+            console.log('Attempting login with:', { email, password });
+            const response = await api.post('/login/', {
+                email: email,
+                password: password,
+            });
+            
+            console.log('Login response:', response.data);
+            
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                console.log('Token stored, redirecting to dashboard');
+                navigate('/dashboard');
             } else {
-                // Replace with real login logic
-                setError('');
-                // Redirect or update auth state here
+                setError('Login failed. No token received.');
             }
-        }, 1200);
+        } catch (err) {
+            console.error('Login error:', err);
+            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

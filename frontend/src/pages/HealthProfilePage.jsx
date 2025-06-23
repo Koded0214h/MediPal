@@ -6,18 +6,18 @@ import '../styles/HealthProfile.css';
 
 const HealthProfilePage = () => {
   const [profile, setProfile] = useState({
-    age: '',
-    gender: '',
-    location: '',
+        age: '',
+        gender: '',
+        location: '',
     existing_conditions: '',
-  });
+    });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+    const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
         const res = await api.get('/health-profile/');
         setProfile({
           age: res.data.age || '',
@@ -25,22 +25,22 @@ const HealthProfilePage = () => {
           location: res.data.location || '',
           existing_conditions: res.data.existing_conditions?.map(c => c.name).join(', ') || '',
         });
-      } catch (err) {
+            } catch (err) {
         setError('Failed to load health profile');
       } finally {
         setLoading(false);
-      }
-    };
-    fetchProfile();
-  }, []);
+            }
+        };
+        fetchProfile();
+    }, []);
 
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
-  };
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
     setSuccess('');
     try {
       await api.post('/health-profile/', {
@@ -52,16 +52,16 @@ const HealthProfilePage = () => {
           : [],
       });
       setSuccess('Profile updated successfully!');
-    } catch (err) {
+        } catch (err) {
       setError('Failed to update profile. Please try again.');
-    }
-  };
+        }
+    };
 
   if (loading) {
     return <div className="health-profile-loader">Loading...</div>;
   }
 
-  return (
+    return (
     <div className="health-profile-main-bg health-profile-flex-wrapper">
       <div className="health-profile-card">
         <div className="health-profile-card-header">
@@ -126,8 +126,8 @@ const HealthProfilePage = () => {
         </form>
       </div>
       <Footer />
-    </div>
-  );
+        </div>
+    );
 };
 
 export default HealthProfilePage; 

@@ -70,25 +70,25 @@ const Dashboard = () => {
                 </div>
                 <button className="dashboard-logout-icon-btn" onClick={handleLogout} title="Logout">
                     <FaSignOutAlt size={22} />
-                </button>
-            </div>
+                    </button>
+                                </div>
             <div className="dashboard-grid">
                 {/* Wallet Card */}
                 <div className="dashboard-card wallet-card">
                     <div className="dashboard-card-header">
                         <div className="dashboard-card-icon wallet-icon-bg"><FaWallet size={28} /></div>
                         <h2>Wallet</h2>
-                    </div>
+                                </div>
                     <div className="wallet-balance-highlight">₦{walletData?.balance !== undefined ? walletData.balance : '0.00'}</div>
                     {walletData?.goal && <div className="wallet-goal">Goal: ₦{walletData.goal}</div>}
                     <Link to="/wallet" className="dashboard-btn dashboard-btn-primary">Top up</Link>
-                </div>
+                                </div>
                 {/* Health Card */}
                 <div className="dashboard-card health-card">
                     <div className="dashboard-card-header">
                         <div className="dashboard-card-icon health-icon-bg"><FaHeartbeat size={28} /></div>
                         <h2>Health</h2>
-                    </div>
+                                </div>
                     {healthData ? (
                         <div className="health-stats-grid">
                             <div className="stat-item"><span>Age</span><div>{healthData.age || 'Not set'}</div></div>
@@ -98,8 +98,8 @@ const Dashboard = () => {
                             <div className="stat-item"><span>BMI</span><div>{healthData.bmi || 'Not set'}</div></div>
                             <div className="stat-item"><span>BP</span><div>{healthData.bloodPressure || 'Not set'}</div></div>
                             <div className="stat-item"><span>Blood Sugar</span><div>{healthData.bloodSugar || 'Not set'}</div></div>
-                        </div>
-                    ) : (
+                            </div>
+                        ) : (
                         <p>No health data. <Link to="/health-profile-form">Complete your profile</Link></p>
                     )}
                 </div>
@@ -109,14 +109,14 @@ const Dashboard = () => {
                         <div className="dashboard-card-icon ai-icon-bg"><FaRobot size={28} /></div>
                         <h2>AI Nudge</h2>
                     </div>
-                    {latestAiRecommendation ? (
-                        <>
+                        {latestAiRecommendation ? (
+                            <>
                             <div className="ai-nudge-text">{latestAiRecommendation.suggested_goals || 'No recent nudges.'}</div>
                             <div className="ai-risk">Risk: {latestAiRecommendation.predicted_risk || 'N/A'}</div>
-                        </>
-                    ) : (
+                            </>
+                        ) : (
                         <p>No AI nudges yet.</p>
-                    )}
+                        )}
                 </div>
                 {/* Appointments Card */}
                 <div className="dashboard-card appointments-card">

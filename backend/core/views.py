@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout
-from django.http import JsonResponse
 
 from decimal import Decimal
 from .utils.ai import generate_health_goals
@@ -20,15 +19,6 @@ from .serializers import (
     UserSerializer, HealthProfileSerializer, TransactionSerializer,
     ProviderService, AIRecommendationSerializer, WalletSerializer
 )
-
-
-def test_endpoint(request):
-    """Simple test endpoint to check if the server is working"""
-    return JsonResponse({
-        'status': 'ok',
-        'message': 'Server is running',
-        'database': 'connected'
-    })
 
 
 class RegisterView(APIView):

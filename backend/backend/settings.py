@@ -146,22 +146,3 @@ DATABASES = {
 
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
 CORS_ALLOW_CREDENTIALS = True
-
-# Add specific allowed origins for production
-CORS_ALLOWED_ORIGINS = [
-    "https://medi-pal-dfpt.onrender.com",
-    "http://localhost:3000",
-    "http://localhost:5173",
-]
-
-CORS_ALLOWED_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-]
