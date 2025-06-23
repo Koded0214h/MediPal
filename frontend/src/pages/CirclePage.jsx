@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaUsers, FaMoneyBillWave, FaCalendarAlt, FaUserPlus, FaUserFriends, FaTimes } from "react-icons/fa";
 import "../styles/CirclePage.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -49,72 +50,77 @@ const CirclePage = () => {
   };
 
   return (
-    <div className="circle-page">
+    <div className="circle-main-bg">
       <Navbar />
-      <h2 className="circle-heading">Your Health Circles</h2>
-
-      <section className="circle-actions">
-        <button className="btn create" onClick={toggleCreateModal}>+ Create Circle</button>
-        <button className="btn join" onClick={toggleJoinModal}>Join Circle</button>
-      </section>
-
-      <section className="circle-list">
-        <h3>Active Circles</h3>
-
+      <div className="circle-flex-wrapper">
         <div className="circle-card">
-          <h4>Malaria Cover Squad</h4>
-          <p>Saving: ₦1,000 weekly</p>
-          <p>Members: 6</p>
-          <button className="btn view"><a href="/circledet">View</a></button>
+          <div className="circle-card-header">
+            <FaUsers className="circle-card-icon" />
+            <h2>Your Health Circles</h2>
+          </div>
+          <section className="circle-actions">
+            <button className="circle-btn create" onClick={toggleCreateModal}><FaUserPlus style={{marginRight:'0.5rem'}} />Create Circle</button>
+            <button className="circle-btn join" onClick={toggleJoinModal}><FaUserFriends style={{marginRight:'0.5rem'}} />Join Circle</button>
+          </section>
+          <section className="circle-list">
+            <h3>Active Circles</h3>
+            <div className="circle-list-cards">
+              <div className="circle-list-card">
+                <div className="circle-list-card-header"><FaUsers className="circle-list-card-icon" /><h4>Malaria Cover Squad</h4></div>
+                <p><FaMoneyBillWave style={{marginRight:'0.3rem'}} />Saving: ₦1,000 weekly</p>
+                <p><FaUserFriends style={{marginRight:'0.3rem'}} />Members: 6</p>
+                <button className="circle-btn view">View</button>
+              </div>
+              <div className="circle-list-card">
+                <div className="circle-list-card-header"><FaUsers className="circle-list-card-icon" /><h4>Hospital Bills Backup</h4></div>
+                <p><FaMoneyBillWave style={{marginRight:'0.3rem'}} />Saving: ₦2,500 monthly</p>
+                <p><FaUserFriends style={{marginRight:'0.3rem'}} />Members: 12</p>
+                <button className="circle-btn view">View</button>
+              </div>
+            </div>
+          </section>
         </div>
+      </div>
 
-        <div className="circle-card">
-          <h4>Hospital Bills Backup</h4>
-          <p>Saving ₦2,500 monthly</p>
-          <p>Members: 12</p>
-          <button className="btn view">View</button>
-        </div>
-      </section>
-
-      {/* ✅ Create Circle Modal with Functional Form */}
+      {/* Create Circle Modal */}
       {showCreateModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="circle-modal">
+          <div className="circle-modal-content">
+            <button className="circle-modal-close" onClick={toggleCreateModal}><FaTimes /></button>
             <h3>Create New Health Circle</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="circle-modal-form">
               <label>Circle Name</label>
               <input name="name" value={form.name} onChange={handleChange} required />
-
               <label>Amount to Save (₦)</label>
               <input name="amount" type="number" value={form.amount} onChange={handleChange} required />
-
               <label>Frequency</label>
               <select name="frequency" value={form.frequency} onChange={handleChange}>
                 <option>Weekly</option>
                 <option>Monthly</option>
               </select>
-
               <label>Max Members</label>
               <input name="maxMembers" type="number" value={form.maxMembers} onChange={handleChange} required />
-
-              <div className="modal-buttons">
-                <button type="submit" className="btn create tap">Create</button>
-                <button type="button" onClick={toggleCreateModal} className="btn cancel tip">Cancel</button>
+              <div className="circle-modal-buttons">
+                <button type="submit" className="circle-btn create">Create</button>
+                <button type="button" onClick={toggleCreateModal} className="circle-btn cancel">Cancel</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* ✅ Join Circle Modal */}
+      {/* Join Circle Modal */}
       {showJoinModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="circle-modal">
+          <div className="circle-modal-content">
+            <button className="circle-modal-close" onClick={toggleJoinModal}><FaTimes /></button>
             <h3>Join a Circle</h3>
-            <form>
+            <form className="circle-modal-form">
               <input type="text" placeholder="Enter Circle Code" required />
-              <button type="submit" className="btn join">Join</button>
-              <button type="button" onClick={toggleJoinModal} className="btn cancel">Cancel</button>
+              <div className="circle-modal-buttons">
+                <button type="submit" className="circle-btn join">Join</button>
+                <button type="button" onClick={toggleJoinModal} className="circle-btn cancel">Cancel</button>
+              </div>
             </form>
           </div>
         </div>

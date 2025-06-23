@@ -8,17 +8,15 @@ import Dashboard from './pages/Dashboard';
 import CirclePage from './pages/CirclePage';
 import LandingPage from './pages/LandingPage';
 import HealthProfilePage from './pages/HealthProfilePage';
-import RegisterPage from './pages/Register';
-import LoginPage from './pages/Login';
+import Register from './pages/Register';
+import Login from './pages/Login';
 import ContactPage from './pages/ContactPage';
 import Wallet from './pages/Wallet';
 import HealthQuiz from './pages/HealthQuiz'
-import ProfilePage from'./pages/ProfilePage'
+import ProfilePage from './pages/ProfilePage'
 import CircleDetails from './pages/CircleDetails'
 import ProvidersPage from './pages/ProvidersPage'
 import SettingsPage from './pages/SettingsPage'
-
-import HealthQuiz from './pages/HealthQuiz';
 
 // Create a new component that uses useLocation
 function AppContent() {
@@ -49,14 +47,18 @@ function AppContent() {
             {shouldShowNavbar && <Navbar isAuthenticated={isAuthenticated} />}
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/circle" element={<CirclePage />} />
                 <Route path="/wallet" element={<Wallet />} />
                 <Route path="/quiz" element={<HealthQuiz />} />
                 <Route path="/health-profile-form" element={<HealthProfilePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/circledet" element={<CircleDetails />} />
+                <Route path="/provider" element={<ProvidersPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
             </Routes>
         </>
     );
@@ -64,22 +66,6 @@ function AppContent() {
 
 // Main App component that provides the Router context
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element ={<Dashboard />}/>
-        <Route path="/circle" element={<CirclePage />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/quiz" element={<HealthQuiz />} />
-        <Route path="/profile" element ={<ProfilePage />} />
-        <Route path="/circledet" element = {<CircleDetails />}/>
-        <Route path="/provider" element ={<ProvidersPage />}/>
-        <Route path="/settings" element ={<SettingsPage />}/>
-
-      </Routes>
-    </Router>
-  );
     return (
         <Router>
             <AppContent />

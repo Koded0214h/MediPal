@@ -96,7 +96,7 @@ export default function Signup() {
               />
               <Text style={styles.title}>Create Account</Text>
               <Text style={styles.subtitle}>Sign up to get started</Text>
-            </View>
+          </View>
 
             <View style={styles.form}>
               <View style={styles.inputContainer}>
@@ -139,25 +139,25 @@ export default function Signup() {
 
               <View style={styles.inputContainer}>
                 <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
-                <TextInput
+                  <TextInput
                   style={[styles.input, { paddingRight: 50 }]}
-                  placeholder="Password"
+                    placeholder="Password"
                   value={form.password}
                   onChangeText={(value) => setForm({ ...form, password: value })}
-                  secureTextEntry={!showPassword}
+                    secureTextEntry={!showPassword}
                   editable={!loading}
                   placeholderTextColor="#666"
-                />
-                <TouchableOpacity
+                  />
+                  <TouchableOpacity
                   style={styles.showPasswordButton}
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <Ionicons
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Ionicons
                     name={showPassword ? "eye-off-outline" : "eye-outline"}
                     size={20}
                     color="#666"
-                  />
-                </TouchableOpacity>
+                    />
+                  </TouchableOpacity>
               </View>
 
               <View style={styles.inputContainer}>
@@ -183,7 +183,7 @@ export default function Signup() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity
+                  <TouchableOpacity
                 style={[styles.button, loading && styles.buttonDisabled]}
                 onPress={handleSignUp}
                 disabled={loading}
@@ -193,16 +193,16 @@ export default function Signup() {
                 ) : (
                   <Text style={styles.buttonText}>Create Account</Text>
                 )}
-              </TouchableOpacity>
+                  </TouchableOpacity>
 
               <View style={styles.loginContainer}>
                 <Text style={styles.loginText}>Already have an account? </Text>
-                <TouchableOpacity
+                  <TouchableOpacity
                   onPress={() => router.back()}
                   disabled={loading}
                 >
                   <Text style={styles.loginLink}>Sign In</Text>
-                </TouchableOpacity>
+                  </TouchableOpacity>
               </View>
             </View>
           </View>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../utils/axios';
+import { FaEnvelopeOpenText, FaUser, FaEnvelope, FaCommentDots } from 'react-icons/fa';
 import '../styles/ContactPage.css';
 
 const ContactPage = () => {
@@ -20,65 +20,67 @@ const ContactPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('');
-        try {
-            const response = await api.post('/contact/', formData);
-            if (response.status === 200) {
+        // Simulate API call
+        setTimeout(() => {
+            if (formData.name && formData.email && formData.message) {
                 setStatus('success');
-                setFormData({ name: '', email: '', message: '' }); // Clear form
+                setFormData({ name: '', email: '', message: '' });
             } else {
                 setStatus('error');
             }
-        } catch (err) {
-            setStatus('error');
-            console.error("Contact form submission error:", err.response?.data || err.message);
-        }
+        }, 1200);
     };
 
     return (
-        <div className="contact-page-container">
-            <div className="contact-content-wrapper">
-                <h2>Contact Us</h2>
-                <p>We'd love to hear from you! Please fill out the form below or reach out directly.</p>
-
-                {status === 'success' && <div className="success-message">Your message has been sent successfully!</div>}
-                {status === 'error' && <div className="error-message">Failed to send message. Please try again later.</div>}
-
-                <form onSubmit={handleSubmit} className="contact-form">
-                    <div className="form-group">
-                        <label htmlFor="name">Your Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
+        <div className="contact-main-bg">
+            <div className="contact-flex-wrapper">
+                <div className="contact-card">
+                    <div className="contact-card-header">
+                        <div className="contact-card-icon">
+                            <FaEnvelopeOpenText />
+                        </div>
+                        <h2>Contact Us</h2>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Your Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="message">Message</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            rows="6"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" className="submit-button">Send Message</button>
-                </form>
+                    <p className="contact-card-desc">We'd love to hear from you! Please fill out the form below or reach out directly.</p>
+                    {status === 'success' && <div className="contact-success">Your message has been sent successfully!</div>}
+                    {status === 'error' && <div className="contact-error">Failed to send message. Please try again later.</div>}
+                    <form onSubmit={handleSubmit} className="contact-form">
+                        <div className="form-group">
+                            <label htmlFor="name"><FaUser style={{marginRight: '0.5rem'}} />Your Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email"><FaEnvelope style={{marginRight: '0.5rem'}} />Your Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="message"><FaCommentDots style={{marginRight: '0.5rem'}} />Message</label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="6"
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <button type="submit" className="contact-btn">Send Message</button>
+                    </form>
+                </div>
             </div>
         </div>
     );

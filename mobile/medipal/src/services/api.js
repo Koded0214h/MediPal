@@ -4,6 +4,12 @@ import { Platform } from 'react-native';
 
 // Configure base URL based on platform
 const getBaseURL = () => {
+  // Check if we're running on web
+  if (typeof window !== 'undefined') {
+    return 'http://localhost:8000/api/';  // Web
+  }
+  
+  // React Native platforms
   if (Platform.OS === 'android') {
     return 'http://10.0.2.2:8000/api/';  // Android emulator
   } else if (Platform.OS === 'ios') {

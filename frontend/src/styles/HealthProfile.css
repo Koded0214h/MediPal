@@ -1,51 +1,40 @@
-:root {
-    --primary: #4caf50;
-    --secondary: #a5d6a7;
-    --accent: #ffc107;
-    --background: #ffffff;
-    --text: #263238;
-    --light-gray: #f0f2f5;
-}
-
-.register-main-bg {
+.health-profile-main-bg {
   min-height: 100vh;
   background: linear-gradient(120deg, #fff 60%, #A5D6A7 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem 0;
 }
 
-.register-flex-wrapper {
+.health-profile-flex-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 }
 
-.register-card {
-  background: rgba(255,255,255,0.97);
+.health-profile-card {
+  background: rgba(255,255,255,0.95);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(76,175,80,0.10);
   padding: 2.5rem 2rem 2rem 2rem;
-  max-width: 440px;
+  margin: 2rem auto;
+  max-width: 420px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.register-card-header {
+.health-profile-card-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.register-card-icon {
+.health-profile-card-icon {
   background: linear-gradient(135deg, #A5D6A7 60%, #4CAF50 100%);
   color: #fff;
   border-radius: 50%;
@@ -58,14 +47,14 @@
   box-shadow: 0 2px 8px rgba(76,175,80,0.10);
 }
 
-.register-card-header h2 {
+.health-profile-card-header h2 {
   font-size: 1.5rem;
   color: #4CAF50;
   font-weight: 700;
   margin: 0;
 }
 
-.register-form {
+.health-profile-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -105,31 +94,7 @@
   box-shadow: 0 2px 8px rgba(76,175,80,0.10);
 }
 
-.phone-input-group {
-  display: flex;
-  border: 1.5px solid #A5D6A7;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 100%;
-}
-.phone-input-group .country-code {
-  padding: 0.7rem 1rem;
-  background-color: #A5D6A7;
-  color: #263238;
-  font-weight: 600;
-  border-right: 1.5px solid #A5D6A7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.phone-input-group input {
-  flex-grow: 1;
-  border: none;
-  padding: 0.7rem 1rem;
-  border-radius: 0 8px 8px 0;
-}
-
-.register-btn {
+.health-profile-btn {
   background: #4CAF50;
   color: #fff;
   border: none;
@@ -142,12 +107,12 @@
   transition: background 0.2s, color 0.2s;
   box-shadow: 0 2px 8px rgba(76,175,80,0.10);
 }
-.register-btn:hover {
+.health-profile-btn:hover {
   background: #FFC107;
   color: #263238;
 }
 
-.register-error {
+.health-profile-error {
   color: #fff;
   background: #F44336;
   padding: 0.7rem 1rem;
@@ -156,59 +121,25 @@
   font-size: 1rem;
   text-align: center;
 }
-
-.register-footer-link {
-  margin-top: 1.2rem;
-  width: 100%;
+.health-profile-success {
+  color: #fff;
+  background: #4CAF50;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
   text-align: center;
+}
+.health-profile-loader {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.2rem;
   color: #263238;
-  font-size: 0.98rem;
-}
-.register-footer-link a {
-  color: #4CAF50;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.register-footer-link a:hover {
-  color: #FFC107;
 }
 
 @media (max-width: 600px) {
-  .register-card {
+  .health-profile-card {
     padding: 1.2rem 0.7rem 1rem 0.7rem;
     max-width: 98vw;
   }
-}
-
-.img h1 {
-  text-align: center;
-  margin-top: 50%;
-  margin-bottom: 5%;
-  font-family: 'Dancing Script';
-  color:#263238;
-  text-shadow: -1px -1px 0 #ffc107,
-             1px -1px 0 #ffc107,
-             -1px 1px 0 #ffc107,
-             1px 1px 0 #ffc107
-}
-
-.img p {
-  font-size: 20px;
-  text-align: center;
-    font-family: 'Dancing Script';
-
-              ;
-}
-
-
-/* Optional: Responsive Design */
-@media (max-width: 600px) {
-  .register-container {
-    padding: 20px;
-  }
-
-  input, select, textarea {
-    font-size: 16px;
-  }
-}
+} 

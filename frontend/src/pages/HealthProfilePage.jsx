@@ -1,104 +1,133 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import api from '../utils/axios';
-import HealthProfileForm from '../components/HealthProfileForm'; // Import the new form component
-import '../styles/HealthProfilePage.css';
+import Footer from '../components/Footer';
+import { FaHeartbeat, FaUser, FaMapMarkerAlt, FaNotesMedical } from 'react-icons/fa';
+import '../styles/HealthProfile.css';
 
 const HealthProfilePage = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        age: '',
-        gender: '',
-        location: '',
-        existing_conditions: '', // This will be a comma-separated string for now
-    });
-    const [error, setError] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+  const [profile, setProfile] = useState({
+    age: '',
+    gender: '',
+    location: '',
+    existing_conditions: '',
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-    // Fetch existing profile data if available
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await api.get('/health-profile/');
-                if (response.data) {
-                    setFormData({
-                        age: response.data.age || '',
-                        gender: response.data.gender || '', // Backend will return proper capitalization
-                        location: response.data.location || '',
-                        // Convert array of condition objects to comma-separated string for input
-                        existing_conditions: response.data.existing_conditions ? response.data.existing_conditions.map(cond => cond.name).join(', ') : '',
-                    });
-                }
-            } catch (err) {
-                console.error("Failed to fetch health profile", err);
-                // Do not set an error message that blocks the form if it's just not found
-            }
-        };
-        fetchProfile();
-    }, []);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // Ensure gender is properly capitalized
-        const newValue = name === 'gender' ? value : value;
-        setFormData({
-            ...formData,
-            [name]: newValue,
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await api.get('/health-profile/');
+        setProfile({
+          age: res.data.age || '',
+          gender: res.data.gender || '',
+          location: res.data.location || '',
+          existing_conditions: res.data.existing_conditions?.map(c => c.name).join(', ') || '',
         });
+      } catch (err) {
+        setError('Failed to load health profile');
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchProfile();
+  }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        setSuccessMessage('');
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
 
-        try {
-            // Split conditions string into an array of names
-            const conditionsArray = formData.existing_conditions
-                .split(',')
-                .map(cond => cond.trim())
-                .filter(cond => cond !== '');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    try {
+      await api.post('/health-profile/', {
+        age: profile.age,
+        gender: profile.gender,
+        location: profile.location,
+        existing_conditions: profile.existing_conditions
+          ? profile.existing_conditions.split(',').map(c => c.trim())
+          : [],
+      });
+      setSuccess('Profile updated successfully!');
+    } catch (err) {
+      setError('Failed to update profile. Please try again.');
+    }
+  };
 
-            // Validate gender is one of the allowed values
-            if (!['Male', 'Female', 'Other'].includes(formData.gender)) {
-                setError('Please select a valid gender option');
-                return;
-            }
+  if (loading) {
+    return <div className="health-profile-loader">Loading...</div>;
+  }
 
-            const payload = {
-                age: parseInt(formData.age, 10),
-                gender: formData.gender,
-                location: formData.location,
-                existing_conditions_names: conditionsArray, // Send as a list of names
-            };
-
-            console.log('Sending payload to backend:', payload);
-
-            const response = await api.post('/health-profile/', payload);
-
-            if (response.status === 200) { // Assuming 200 OK for update/create
-                setSuccessMessage('Health profile saved successfully!');
-                navigate('/dashboard'); // Redirect to dashboard after saving
-            } else {
-                setError(response.data.message || 'Failed to save health profile.');
-            }
-        } catch (err) {
-            console.error("Error saving health profile:", err.response?.data || err.message);
-            setError(err.response?.data?.message || 'Failed to save health profile. Please try again.');
-        }
-    };
-
-    return (
-        <div className="health-profile-page">
-            <HealthProfileForm
-                formData={formData}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                error={error}
-                successMessage={successMessage}
-            />
+  return (
+    <div className="health-profile-main-bg health-profile-flex-wrapper">
+      <div className="health-profile-card">
+        <div className="health-profile-card-header">
+          <div className="health-profile-card-icon"><FaHeartbeat size={32} /></div>
+          <h2>Health Profile</h2>
         </div>
-    );
+        <form className="health-profile-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="age"><FaUser style={{ marginRight: 8 }} />Age</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              value={profile.age}
+              onChange={handleChange}
+              min="0"
+              placeholder="Enter your age"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="gender"><FaUser style={{ marginRight: 8 }} />Gender</label>
+            <select
+              id="gender"
+              name="gender"
+              value={profile.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="location"><FaMapMarkerAlt style={{ marginRight: 8 }} />Location</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={profile.location}
+              onChange={handleChange}
+              placeholder="Enter your location"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="existing_conditions"><FaNotesMedical style={{ marginRight: 8 }} />Existing Conditions</label>
+            <input
+              type="text"
+              id="existing_conditions"
+              name="existing_conditions"
+              value={profile.existing_conditions}
+              onChange={handleChange}
+              placeholder="e.g. asthma, diabetes, ..."
+            />
+          </div>
+          {error && <div className="health-profile-error">{error}</div>}
+          {success && <div className="health-profile-success">{success}</div>}
+          <button className="health-profile-btn" type="submit">Update Profile</button>
+        </form>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default HealthProfilePage; 

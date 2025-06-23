@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUser, FaEnvelope, FaGlobe, FaPhone, FaLock } from 'react-icons/fa';
 
 const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmit, error, countries }) => {
     return (
-        <div className="register-form-wrapper">
-            <h2>Create Your MediPal Account</h2>
-            {error && <div className="error-message">{error}</div>}
+        <>
+            {error && <div className="register-error">{error}</div>}
             <form onSubmit={handleSubmit} className="register-form">
                 <div className="form-group">
-                    <label htmlFor="fullName">Full Name</label>
+                    <label htmlFor="fullName"><FaUser style={{marginRight: '0.5rem'}} />Full Name</label>
                     <input
                         type="text"
                         id="fullName"
@@ -19,7 +19,7 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email"><FaEnvelope style={{marginRight: '0.5rem'}} />Email</label>
                     <input
                         type="email"
                         id="email"
@@ -30,7 +30,7 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="country">Country</label>
+                    <label htmlFor="country"><FaGlobe style={{marginRight: '0.5rem'}} />Country</label>
                     <select
                         id="country"
                         name="country"
@@ -46,7 +46,7 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                     </select>
                 </div>
                 <div className="form-group phone-group">
-                    <label htmlFor="phoneNumber">Phone Number</label>
+                    <label htmlFor="phoneNumber"><FaPhone style={{marginRight: '0.5rem'}} />Phone Number</label>
                     <div className="phone-input-group">
                         <span className="country-code">{formData.countryCode}</span>
                         <input
@@ -60,7 +60,7 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password"><FaLock style={{marginRight: '0.5rem'}} />Password</label>
                     <input
                         type="password"
                         id="password"
@@ -71,7 +71,7 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <label htmlFor="confirmPassword"><FaLock style={{marginRight: '0.5rem'}} />Confirm Password</label>
                     <input
                         type="password"
                         id="confirmPassword"
@@ -81,12 +81,12 @@ const RegisterForm = ({ formData, handleChange, handleCountryChange, handleSubmi
                         required
                     />
                 </div>
-                <button type="submit" className="register-button">Register</button>
+                <button type="submit" className="register-btn">Register</button>
             </form>
-            <p className="login-link">
+            <p className="register-footer-link">
                 Already have an account? <Link to="/login">Login</Link>
             </p>
-        </div>
+        </>
     );
 };
 
