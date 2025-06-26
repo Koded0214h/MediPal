@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/axios';
 import Footer from '../components/Footer';
 import { FaHeartbeat, FaUser, FaMapMarkerAlt, FaNotesMedical } from 'react-icons/fa';
 import '../styles/HealthProfile.css';
 
 const HealthProfilePage = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({
         age: '',
         gender: '',
@@ -43,16 +45,25 @@ const HealthProfilePage = () => {
         setError('');
     setSuccess('');
     try {
-      await api.post('/health-profile/', {
+      const formData = {
         age: profile.age,
         gender: profile.gender,
         location: profile.location,
-        existing_conditions: profile.existing_conditions
-          ? profile.existing_conditions.split(',').map(c => c.trim())
+        existing_conditions_names: profile.existing_conditions
+          ? profile.existing_conditions.split(',').map(c => c.trim()).filter(c => c)
           : [],
-      });
+      };
+      
+      await api.post('/health-profile/', formData);
       setSuccess('Profile updated successfully!');
+      
+      // Redirect to dashboard after 1.5 seconds
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500);
+      
         } catch (err) {
+      console.error('Profile update error:', err.response?.data);
       setError('Failed to update profile. Please try again.');
         }
     };
@@ -92,9 +103,9 @@ const HealthProfilePage = () => {
               required
             >
               <option value="">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div className="form-group">

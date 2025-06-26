@@ -4,6 +4,10 @@ def generate_health_goals(age, gender, location, existing_conditions, full_name)
     Simple health goals generator without heavy AI dependencies.
     This prevents deployment issues with transformers/PyTorch.
     """
+    # Convert ManyRelatedManager to list if needed
+    if hasattr(existing_conditions, 'all'):
+        existing_conditions = list(existing_conditions.all())
+    
     # Basic health goals based on age and conditions
     goals = []
     
@@ -19,9 +23,10 @@ def generate_health_goals(age, gender, location, existing_conditions, full_name)
     
     # Add condition-specific goals
     if existing_conditions:
-        if "diabetes" in str(existing_conditions).lower():
+        conditions_str = str(existing_conditions).lower()
+        if "diabetes" in conditions_str:
             goals.append("Monitor blood sugar levels regularly")
-        if "hypertension" in str(existing_conditions).lower():
+        if "hypertension" in conditions_str:
             goals.append("Reduce salt intake and monitor blood pressure")
     
     # Basic risk assessment

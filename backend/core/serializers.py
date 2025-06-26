@@ -56,6 +56,12 @@ class HealthProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'age', 'gender', 'location', 'existing_conditions', 'existing_conditions_names']
         read_only_fields = ['id', 'user', 'existing_conditions']
 
+    def validate_gender(self, value):
+        """Validate gender field"""
+        if value and value not in ['Male', 'Female', 'Other']:
+            raise serializers.ValidationError("Gender must be one of: Male, Female, Other")
+        return value
+
     def create(self, validated_data):
         existing_conditions_names = validated_data.pop('existing_conditions_names', [])
         health_profile = HealthProfile.objects.create(**validated_data)

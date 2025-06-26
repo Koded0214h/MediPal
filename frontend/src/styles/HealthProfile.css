@@ -1,10 +1,24 @@
+/* Modern Health Profile Styles */
 .health-profile-main-bg {
   min-height: 100vh;
-  background: linear-gradient(120deg, #fff 60%, #A5D6A7 100%);
+  background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 50%, #d4edda 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.health-profile-main-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%234CAF50" opacity="0.03"/><circle cx="75" cy="75" r="1" fill="%234CAF50" opacity="0.03"/><circle cx="50" cy="10" r="0.5" fill="%234CAF50" opacity="0.02"/><circle cx="10" cy="60" r="0.5" fill="%234CAF50" opacity="0.02"/><circle cx="90" cy="40" r="0.5" fill="%234CAF50" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
 }
 
 .health-profile-flex-wrapper {
@@ -12,53 +26,100 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 1200px;
+  position: relative;
+  z-index: 1;
 }
 
 .health-profile-card {
-  background: rgba(255,255,255,0.95);
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(76,175,80,0.10);
-  padding: 2.5rem 2rem 2rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(76, 175, 80, 0.1);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 40px rgba(76, 175, 80, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  padding: 3rem 2.5rem;
   margin: 2rem auto;
-  max-width: 420px;
+  max-width: 500px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.health-profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4CAF50, #81C784, #A5D6A7, #C8E6C9);
+  border-radius: 24px 24px 0 0;
 }
 
 .health-profile-card-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+  position: relative;
 }
 
 .health-profile-card-icon {
-  background: linear-gradient(135deg, #A5D6A7 60%, #4CAF50 100%);
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 50%, #81C784 100%);
   color: #fff;
-  border-radius: 50%;
-  width: 54px;
-  height: 54px;
+  border-radius: 20px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+  font-size: 2.2rem;
+  box-shadow: 
+    0 8px 24px rgba(76, 175, 80, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.health-profile-card-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .health-profile-card-header h2 {
-  font-size: 1.5rem;
-  color: #4CAF50;
-  font-weight: 700;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #2E7D32, #4CAF50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .health-profile-form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1.5rem;
 }
 
 .form-group {
@@ -66,80 +127,215 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  position: relative;
 }
+
 .form-group label {
-  color: #4CAF50;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  font-size: 1.05rem;
+  color: #2E7D32;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+  letter-spacing: -0.2px;
 }
+
+.form-group label svg {
+  color: #4CAF50;
+  opacity: 0.8;
+}
+
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 0.7rem 1rem;
-  border: 1.5px solid #A5D6A7;
-  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  border-radius: 16px;
   font-size: 1.05rem;
   color: #263238;
-  background: #fff;
-  margin-top: 0.1rem;
-  transition: border 0.2s, box-shadow 0.2s;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
 }
+
 .form-group input:focus,
 .form-group select:focus {
-  border: 1.5px solid #4CAF50;
+  border: 2px solid #4CAF50;
   outline: none;
-  box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+  box-shadow: 
+    0 0 0 4px rgba(76, 175, 80, 0.1),
+    0 8px 24px rgba(76, 175, 80, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+}
+
+.form-group input::placeholder {
+  color: #9E9E9E;
+  font-weight: 400;
 }
 
 .health-profile-btn {
-  background: #4CAF50;
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 2rem;
+  border-radius: 16px;
+  padding: 1rem 2.5rem;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 0.5rem;
-  transition: background 0.2s, color 0.2s;
-  box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+  margin-top: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 24px rgba(76, 175, 80, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
+
+.health-profile-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
 .health-profile-btn:hover {
-  background: #FFC107;
-  color: #263238;
+  transform: translateY(-3px);
+  box-shadow: 
+    0 12px 32px rgba(76, 175, 80, 0.4),
+    0 6px 12px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #66BB6A 0%, #81C784 100%);
+}
+
+.health-profile-btn:hover::before {
+  left: 100%;
+}
+
+.health-profile-btn:active {
+  transform: translateY(-1px);
 }
 
 .health-profile-error {
   color: #fff;
-  background: #F44336;
-  padding: 0.7rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #F44336, #E53935);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1rem;
   font-size: 1rem;
   text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(244, 67, 54, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .health-profile-success {
   color: #fff;
-  background: #4CAF50;
-  padding: 0.7rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1rem;
   font-size: 1rem;
   text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: successPulse 2s ease-in-out;
 }
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
 .health-profile-loader {
   text-align: center;
   margin-top: 4rem;
   font-size: 1.2rem;
-  color: #263238;
+  color: #2E7D32;
+  font-weight: 600;
 }
 
-@media (max-width: 600px) {
+/* Responsive Design */
+@media (max-width: 768px) {
+  .health-profile-main-bg {
+    padding: 1rem 0.5rem;
+  }
+  
   .health-profile-card {
-    padding: 1.2rem 0.7rem 1rem 0.7rem;
-    max-width: 98vw;
+    padding: 2rem 1.5rem;
+    margin: 1rem auto;
+    border-radius: 20px;
+  }
+  
+  .health-profile-card-header {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .health-profile-card-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.8rem;
+  }
+  
+  .health-profile-card-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .health-profile-btn {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .health-profile-card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+  
+  .health-profile-card-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+  }
+  
+  .health-profile-card-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  
+  .health-profile-card-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .form-group label {
+    font-size: 1rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 0.8rem 0.9rem;
+    border-radius: 12px;
+  }
+  
+  .health-profile-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
   }
 } 

@@ -1,8 +1,24 @@
 from django.urls import path
+from django.http import JsonResponse
 
 from . import views
 
+def api_root(request):
+    return JsonResponse({
+        'message': 'MediPal API is running successfully!',
+        'status': 'connected',
+        'endpoints': {
+            'register': '/api/register/',
+            'login': '/api/login/',
+            'dashboard': '/api/dashboard/',
+            'health_profile': '/api/health-profile/',
+            'wallet': '/api/wallet/',
+            'contact': '/api/contact/',
+        }
+    })
+
 urlpatterns = [
+    path('', api_root, name='api_root'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),

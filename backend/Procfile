@@ -1,1 +1,1 @@
-web: gunicorn medipal.wsgi
+web: gunicorn backend.wsgi --log-file -

@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage'
 import CircleDetails from './pages/CircleDetails'
 import ProvidersPage from './pages/ProvidersPage'
 import SettingsPage from './pages/SettingsPage'
+import ApiTest from './components/ApiTest'
 
 // Create a new component that uses useLocation
 function AppContent() {
@@ -47,6 +48,7 @@ function AppContent() {
             {shouldShowNavbar && <Navbar isAuthenticated={isAuthenticated} />}
             <Routes>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/test" element={<ApiTest />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/contact" element={<ContactPage />} />

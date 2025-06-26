@@ -1,0 +1,36 @@
+services:
+  # Backend API Service
+  - type: web
+    name: medipal-backend
+    env: python
+    plan: free
+    buildCommand: cd backend && chmod +x build.sh && ./build.sh
+    startCommand: cd backend && gunicorn backend.wsgi --log-file -
+    rootDir: backend
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: medipal-backend.onrender.com
+    databases:
+      - name: medipal-db
+        databaseName: medipal
+        user: medipal
+
+  # Frontend Static Site
+  - type: web
+    name: medipal-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    rootDir: frontend
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://medipal-backend.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 
