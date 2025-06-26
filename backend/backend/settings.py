@@ -156,7 +156,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://medipal-kx8d.onrender.com",
-    "https://medipal-frontend.onrender.com",  # Add your frontend domain
+    "https://medipal-frontend.onrender.com",
+    "https://medi-pal-dfpt.onrender.com",  # Add your actual frontend domain
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
